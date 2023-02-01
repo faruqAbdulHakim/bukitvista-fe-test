@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { Container } from '@mui/material';
+import HomePage from './pages/HomePage';
+import UsersPage from './pages/UsersPage';
+import PostsPage from './pages/PostsPage';
+import PostDetailPage from './pages/PostDetailPage';
+import NavBar from './components/NavBar';
 
 function App() {
+  const location = useLocation();
+
+  // to make sure the page scrolled up on every change page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <Container sx={{ paddingY: '24px' }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/posts" element={<PostsPage />} />
+          <Route path="/posts/:postId" element={<PostDetailPage />} />
+        </Routes>
+      </Container>
+    </>
   );
 }
 
